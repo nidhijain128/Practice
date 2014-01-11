@@ -1,0 +1,312 @@
+<html>
+<head>
+<title>HW8</title>
+<style type="text/css">
+	body {
+		align: center;
+		background-image: url('cloud.jpg');
+		background-repeat:no-repeat;
+		background-size:100%;
+	}
+	#locationText, #data {
+		margin-left: 7%;
+	}
+	.pure-table-even td {
+		background-color: #C9EBF5 !important;
+	}
+	.pure-table-odd td {
+		background-color: #FFFFFF !important;
+	}
+	#fbButton {
+		background-image: url('facebook.jpg');
+		height: 32px;
+		width: 95px;
+		margin-left: 10%;
+	}
+	#textStyle {
+		margin-left: 1%;
+		margin-top: 1.5%;
+		position: absolute;
+	}
+	#bigFont {
+		font-size: 11em !important;
+		margin: 0 !important;
+	}
+	#cityStyle {
+		font-size: 420%;
+		letter-spacing: 2px;
+		text-decoration: none;
+	}
+	#regionStyle {
+		font-size:177%;
+	}
+	#tempChange {
+		font-size:460% !important;
+		margin-top:70px !important;
+		position: absolute !important;
+	}
+	a:link {color:#FFFFFF;}   
+	a:visited {color:#FFFFFF;} 
+	a:active {color:#FFFFFF;}
+	
+	#fullDetails {
+		margin-left:30%;
+	}
+	.needToShift {
+		margin-left: 10%;
+	}
+</style>
+<script src="http://yui.yahooapis.com/3.13.0/build/yui/yui-min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+<link rel="stylesheet" href="http://necolas.github.io/normalize.css/2.1.3/normalize.css">
+<link rel="stylesheet" href="http://yui.yahooapis.com/3.13.0/build/cssbutton/cssbutton.css">
+<script>
+var feed = ""; 
+var city = ""; 
+var region = ""; 
+var country = ""; 
+var img = ""; 
+var text = ""; 
+var unit = ""; 
+var temp = ""; 
+var temp1 = "";
+var tempUnit = "f";
+var link = ""; 
+var high0 = ""; 
+var high1 = ""; 
+var high2 = ""; 
+var high3 = ""; 
+var high4 = ""; 
+var low0 = ""; 
+var low1 = ""; 
+var low2 = ""; 
+var low3 = ""; 
+var low4 = ""; 
+var high01 = ""; 
+var high11 = ""; 
+var high21 = ""; 
+var high31 = ""; 
+var high41 = ""; 
+var low01 = ""; 
+var low11 = ""; 
+var low21 = ""; 
+var low31 = ""; 
+var low41 = "";
+var day0 = ""; 
+var day1 = ""; 
+var day2 = ""; 
+var day3 = ""; 
+var day4 = ""; 
+var text0 = ""; 
+var text1 = ""; 
+var text2 = ""; 
+var text3 = ""; 
+var text4 = "";
+var canPut = 0;
+
+YUI().use('datatable', 'node', function (Y) {
+	var simple = new Y.DataTable({
+        columns: ["Day", "Weather", "High", "Low"],
+        data   : [
+            { Day: day0, Weather: text0, High: high0, Low: low0},
+            { Day: day1, Weather: text1, High: high1, Low: low1},
+			{ Day: day2, Weather: text2, High: high2, Low: low2},
+			{ Day: day3, Weather: text3, High: high3, Low: low3},
+			{ Day: day4, Weather: text4, High: high4, Low: low4}
+        ]
+    });
+});
+
+function tempChange()
+{
+	if(unit == 'F')
+	{
+		document.getElementById("bigTemp").innerHTML = "<span id='bigFont'>" + temp1 + "</span><span id='tempChange'><sup><a href='javascript:tempChange&#40;&#41;;' id='aChange'>&deg;C</a></sup></span>";
+		document.getElementById("tableID").innerHTML = "<thead><font color='#000000'><tr><th>Day</th><th>Weather</th><th>High</th><th>Low</th></tr></thead><tbody><tr class='pure-table-odd'><td>" + day0 + "</td><td>" + text0 + "</td><td><font color='#DF7514'>" + high01 + "&deg;C</font></td><td><font color='#16627A'>" + low01 + "&deg;C</font></td></tr><tr class='pure-table-even'><td>" + day1 + "</td><td>" + text1 + "</td><td><font color='#DF7514'>" + high11 + "&deg;C</font></td><td><font color='#16627A'>" + low11 + "&deg;C</font></td></tr><tr class='pure-table-odd'><td>" + day2 + "</td><td>" + text2 + "</td><td><font color='#DF7514'>" + high21 + "&deg;C</font></td><td><font color='#16627A'>" + low21 + "&deg;C</font></td></tr><tr class='pure-table-even'><td>" + day3 + "</td><td>" + text3 + "</td><td><font color='#DF7514'>" + high31 + "&deg;C</font></td><td><font color='#16627A'>" + low31 + "&deg;C</font></td></tr><tr class='pure-table-odd'><td>" + day4 + "</td><td>" + text4 + "</td><td><font color='#DF7514'>" + high41 + "&deg;C</font></td><td><font color='#16627A'>" + low41 + "&deg;C</font></td></tr></tbody>";
+		unit = 'C';
+		tempUnit = "c";
+	}
+	else if(unit == 'C')
+	{
+		document.getElementById("bigTemp").innerHTML = "<span id='bigFont'>" + temp + "</span><span id='tempChange'><sup><a href='javascript:tempChange&#40;&#41;;' id='aChange'>&deg;F</a></sup></span>";
+		document.getElementById("tableID").innerHTML = "<thead><font color='#000000'><tr><th>Day</th><th>Weather</th><th>High</th><th>Low</th></tr></thead><tbody><tr class='pure-table-odd'><td>" + day0 + "</td><td>" + text0 + "</td><td><font color='#DF7514'>" + high0 + "&deg;F</font></td><td><font color='#16627A'>" + low0 + "&deg;F</font></td></tr><tr class='pure-table-even'><td>" + day1 + "</td><td>" + text1 + "</td><td><font color='#DF7514'>" + high1 + "&deg;F</font></td><td><font color='#16627A'>" + low1 + "&deg;F</font></td></tr><tr class='pure-table-odd'><td>" + day2 + "</td><td>" + text2 + "</td><td><font color='#DF7514'>" + high2 + "&deg;F</font></td><td><font color='#16627A'>" + low2 + "&deg;F</font></td></tr><tr class='pure-table-even'><td>" + day3 + "</td><td>" + text3 + "</td><td><font color='#DF7514'>" + high3 + "&deg;F</font></td><td><font color='#16627A'>" + low3 + "&deg;F</font></td></tr><tr class='pure-table-odd'><td>" + day4 + "</td><td>" + text4 + "</td><td><font color='#DF7514'>" + high4 + "&deg;F</font></td><td><font color='#16627A'>" + low4 + "&deg;F</font></td></tr></tbody><div class='example yui3-skin-sam'><div id='simple'></div><div id='labels'></div></div>";
+		unit = 'F';
+		tempUnit = "f";
+	}
+}
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '456957777758982', // App ID
+      channelUrl : 'channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+};	
+	(function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+
+function postFB() {
+	var radiovalue= $("input[name='way']:checked").val();
+	var b;
+	if(unit == 'F')
+		b = "Temperature is&nbsp;" + temp + "&deg;" + unit;
+	else if(unit == 'C')
+		b = "Temperature is&nbsp;" + temp1 + "&deg;" + unit;
+	var obj = {
+		method: 'feed',
+		link : link,
+		picture: img,
+		name : city + ",&nbsp;" + region + ",&nbsp;" + country,
+		caption : "The current condition for&nbsp;" + city + "&nbsp;is&nbsp;" + text,
+		description : b,
+		properties : {"Look at details": {"text": "here", "href" : link}}
+	};
+	var a;
+	if(unit == 'F')
+		a = day0 + ":&nbsp;" + text0 + ",&nbsp;" + high0 + "/" + low0 + "&deg;" + unit + ";&nbsp;" + day1 + ":&nbsp;" + text1 + ",&nbsp;" + high1 + "/" + low1 + "&deg;" + unit + ";&nbsp;" + day2 + ":&nbsp;" + text2 + ",&nbsp;" + high2 + "/" + low2 + "&deg;" + unit + ";&nbsp;" + day3 + ":&nbsp;" + text3 + ",&nbsp;" + high3 + "/" + low3 + "&deg;" + unit + ";&nbsp;" + day4 + ":&nbsp;" + text4 + ",&nbsp;" + high4 + "/" + low4 + "&deg;" + unit + ".";
+	else if(unit == 'C')
+		a = day0 + ":&nbsp;" + text0 + ",&nbsp;" + high01 + "/" + low01 + "&deg;" + unit + ";&nbsp;" + day1 + ":&nbsp;" + text1 + ",&nbsp;" + high11 + "/" + low11 + "&deg;" + unit + ";&nbsp;" + day2 + ":&nbsp;" + text2 + ",&nbsp;" + high21 + "/" + low21 + "&deg;" + unit + ";&nbsp;" + day3 + ":&nbsp;" + text3 + ",&nbsp;" + high31 + "/" + low31 + "&deg;" + unit + ";&nbsp;" + day4 + ":&nbsp;" + text4 + ",&nbsp;" + high41 + "/" + low41 + "&deg;" + unit + ".";
+	var obj1 = {
+		method: 'feed',
+		link : link,
+		picture: 'http://www-scf.usc.edu/~csci571/2013Fall/hw8/weather.jpg',
+		name : city + ",&nbsp;" + region + ",&nbsp;" + country,
+		caption : "Weather Forecast for&nbsp;" + city,
+		description : a,
+		properties : {"Look at details": {"text": "here", "href" : link}}
+	};
+	function callback(response) {
+		if(response)
+			alert("Your message was successfully posted");
+		}
+	if(radiovalue == "forecast")
+		FB.ui(obj1,callback);
+	else if(radiovalue == "current")
+		FB.ui(obj,callback);
+	return false;
+}
+
+
+function validate()
+	{
+		var loc = document.hw8.location.value;
+		var locationType;
+		var flag = 0;
+		if(loc == "")
+			alert("Please enter a location");
+		else if(!isNaN(loc))
+			{
+				locationType = "zip";
+				if(loc.length != 5)
+				{
+					flag = 1;
+					alert("Invalid zipcode: must be five digits\nExample: 90089");
+				}
+			}
+			else 
+			{
+				locationType = "city";
+				if((loc.indexOf(',') == -1)  || ((loc.indexOf(',')) >= (loc.length - 2)) || (loc.split(",").length - 1)>2)
+				{
+					flag = 1;
+					alert("Invalid location: must inlcude state or country separated by comma\nExample: Los Angeles, CA");
+				}
+			}
+			
+		if((locationType == "zip" || locationType == "city") && flag == 0)
+		{
+			var sloc = loc.replace(/\s+/g, "");
+			var url = "http://cs-server.usc.edu:13856/HomeWork8/HomeWork8?location=" + sloc + "&locationType=" + locationType + "&tempUnit=" + tempUnit;
+			var httpRequest;
+			if (window.XMLHttpRequest) {
+				httpRequest = new XMLHttpRequest();
+			} 
+			else if (window.ActiveXObject) {
+				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			var xmlDoc = null;
+			if(httpRequest) {
+				httpRequest.open("GET", url, false);
+				httpRequest.onreadystatechange = function() {
+					if(httpRequest.readyState == 4)
+						if(httpRequest.status == 200)
+							{
+								xmlDoc = eval('(' + httpRequest.responseText + ')');
+								table.render("#displayHere");
+							}
+				}
+			httpRequest.send(null);
+			if(httpRequest.responseText.replace(/\s+/g, "") == "" || xmlDoc == null)
+				document.getElementById("data").innerHTML = "<b><span style='color: #FFFFFF !important; font-size: 238% !important; margin-top: 5%; position: absolute;'>Weather information cannot be found</span></b>";
+			else{
+			feed = xmlDoc.weather.feed;
+			city = xmlDoc.weather.location.city;
+			region = xmlDoc.weather.location.region;
+			country = xmlDoc.weather.location.country;
+			img = xmlDoc.weather.img;
+			text = xmlDoc.weather.condition.text;
+			unit = xmlDoc.weather.units.temperature;
+			temp = xmlDoc.weather.condition.temp;
+			temp1 = parseInt((temp-32)*5/9);
+			link = xmlDoc.weather.link;
+			high0 = xmlDoc.weather.forecast[0].high;
+			high01 = parseInt((high0-32)*5/9);
+			high1 = xmlDoc.weather.forecast[1].high;
+			high11 = parseInt((high1-32)*5/9);
+			high2 = xmlDoc.weather.forecast[2].high;
+			high21 = parseInt((high2-32)*5/9);
+			high3 = xmlDoc.weather.forecast[3].high;
+			high31 = parseInt((high3-32)*5/9);
+			high4 = xmlDoc.weather.forecast[4].high;
+			high41 = parseInt((high4-32)*5/9);
+			low0 = xmlDoc.weather.forecast[0].low;
+			low01 = parseInt((low0-32)*5/9);
+			low1 = xmlDoc.weather.forecast[1].low;
+			low11 = parseInt((low1-32)*5/9);
+			low2 = xmlDoc.weather.forecast[2].low;
+			low21 = parseInt((low2-32)*5/9);
+			low3 = xmlDoc.weather.forecast[3].low;
+			low31 = parseInt((low3-32)*5/9);
+			low4 = xmlDoc.weather.forecast[4].low;
+			low41 = parseInt((low4-32)*5/9);
+			day0 = xmlDoc.weather.forecast[0].day;
+			day1 = xmlDoc.weather.forecast[1].day;
+			day2 = xmlDoc.weather.forecast[2].day;
+			day3 = xmlDoc.weather.forecast[3].day;
+			day4 = xmlDoc.weather.forecast[4].day;
+			text0 = xmlDoc.weather.forecast[0].text;
+			text1 = xmlDoc.weather.forecast[1].text;
+			text2 = xmlDoc.weather.forecast[2].text;
+			text3 = xmlDoc.weather.forecast[3].text;
+			text4 = xmlDoc.weather.forecast[4].text;
+			document.getElementById("data").innerHTML = "<br><font color='#FFFFFF'><a href='" + feed + "' id='cityStyle'>" + city + "</a><br><br><span id='regionStyle'>" + region + ",&nbsp;" + country + "</span><br><br><br><br><br><br><div class='pure-g'><div class='pure-u-1-3'><img src='" + img + "'><span id='textStyle'>" + text + "</span><br><br>&uarr;" + high0 + "&deg;" + unit + "&nbsp;&nbsp;&nbsp;&nbsp;&darr;" + low0 + "&deg;<span id='unit'>" + unit + "</span><div id='bigTemp'><span id='bigFont'>" + temp + "</span><span id='tempChange'><sup><a href='javascript:tempChange&#40;&#41;;' id='aChange'>&deg;" + unit + "</a></sup></span></div></div><div class='pure-u-1-3 yui3-skin-sam' id='displayHere'><b>Forecast</b><br><br><br><table class='pure-table' id='tableID'><thead><font color='#000000'><tr><th>Day</th><th>Weather</th><th>High</th><th>Low</th></tr></thead><tbody><tr class='pure-table-odd'><td>" + day0 + "</td><td>" + text0 + "</td><td><font color='#DF7514'>" + high0 + "&deg;" + unit + "</font></td><td><font color='#16627A'>" + low0 + "&deg;" + unit +  "</font></td></tr><tr class='pure-table-even'><td>" + day1 + "</td><td>" + text1 + "</td><td><font color='#DF7514'>" + high1 + "&deg;" + unit + "</font></td><td><font color='#16627A'>" + low1 + "&deg;" + unit + "</font></td></tr><tr class='pure-table-odd'><td>" + day2 + "</td><td>" + text2 + "</td><td><font color='#DF7514'>" + high2 + "&deg;" + unit + "</font></td><td><font color='#16627A'>" + low2 + "&deg;" + unit + "</font></td></tr><tr class='pure-table-even'><td>" + day3 + "</td><td>" + text3 + "</td><td><font color='#DF7514'>" + high3 + "&deg;" + unit + "</font></td><td><font color='#16627A'>" + low3 + "&deg;" + unit + "</font></td></tr><tr class='pure-table-odd'><td>" + day4 + "</td><td>" + text4 + "</td><td><font color='#DF7514'>" + high4 + "&deg;" + unit + "</font></td><td><font color='#16627A'>" + low4 + "&deg;" + unit +  "</font></td></tr></tbody></table></font></div><div class='pure-u-1-3'><br><br><br><br><div class='needToShift'><input type='radio' name='way' value='current' checked>Post Current Weather</input><br><input type='radio' name='way' value='forecast'>Post Weather Forecast</input><br><input type='button' id='fbButton' onclick=postFB()></input></div><br><br><br><br><br><br><br><div id='fullDetails' style='color:#FFFFFF'><span>View Full Details on</span><a href='" + link + "'><img src='yahoo.gif'></a></div></div></div></font>";
+			
+			}
+			return false;	
+			}			
+		}
+	}
+</script>
+</head>
+<body>
+<div id="fb-root"></div>
+<div id="locationText">
+	<form name="hw8" id="hw8" method="get" class="pure-form">
+    <table border="0" cellpadding="8">
+    	<tr><td><font color="#FFFFFF"><b>Location:</b></font></td><td><input type="text" name="location" id="location" size="65" placeholder="Enter city or zip code"></td>
+        <td colspan="2"><input type="submit" class="pure-button" name="submit" value="Search" onclick="return validate()"></input></td></tr>
+	</table> 	               
+	</form>
+</div>
+<div id="data"></div>
+<noscript>
+<!--</body>-->
+</html>
