@@ -1,0 +1,97 @@
+body {
+	background-color: #111440;
+	}
+	
+h1 {
+	padding-left: 20px;
+	padding-top: 20px;
+	}
+	
+#profilelinks {
+	float: right;
+	margin-right: 10px;
+	}
+	
+#mainstrip {
+	margin-right: 8%;
+	margin-left: 8%;
+	background-color: #CDDAF1;
+	}
+	
+#header {
+	height: 18%;
+	}
+	
+#main {
+	
+	}
+	
+#footer {
+	height: 18%;
+	}
+	
+.separationline {
+	height: 5%;
+	background-color: #111440;
+	}
+	
+.tabs {
+	background-color: #111440;
+	border: none;
+	width: 10%;
+	height: 5%;
+	color: white;
+	}
+	
+#button4 {
+	background-color: #111440;
+	border: none;
+	width: 10%;
+	height: 5%;
+	color: white;
+	}
+	
+.tabsbg {
+	background-color: #111440 !important;
+	border: none;
+	}
+	
+.tabset {
+	position: center;
+	}
+	
+#nidhi {
+}
+
+#profile {
+	display: none;
+}
+
+#projects {
+	display: none;
+}
+
+#courses {
+	display: none;
+}
+
+#quotes {
+	display: none;
+}
+
+#about {
+	display: none;
+}
+
+#nidhipic {
+	float: left;
+	margin: 0 15px 15px 0;
+	}
+	
+#nidhipicdata {
+	overflow: hidden;
+}
+
+#wtdata {
+	display: none;
+	}
