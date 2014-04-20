@@ -1,4 +1,4 @@
-Assignments
+JAVA
 ===========
 
-MS Assignments of all courses
+Coding Pratice 
